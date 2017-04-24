@@ -1,0 +1,30 @@
+<?php
+function greeting_menu() {
+    $items = array();
+    $items['hello_friend'] = array(
+        'title' => 'Hello Friend!',
+        'page callback' => 'say_hello',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['farewell'] = array(
+    'title' => 'Farewell Friend!',
+    'page callback' => 'say_farewell',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function say_hello() {
+  $greeting_array = array('hello', 'my', 'dear','friend');
+  $echo = '';
+    foreach ($greeting_array as $word) {
+      $echo .= $word.' ';
+    };
+    return '<p>'.$echo.'</p>';
+}
+
+function say_farewell() {
+    return '<img src="/sites/all/modules/pet/imgres.jpg">';
+}
