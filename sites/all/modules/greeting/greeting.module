@@ -5,26 +5,39 @@ function greeting_menu() {
         'title' => 'Hello Friend!',
         'page callback' => 'say_hello',
         'access callback' => TRUE,
-        'type' => MENU_NORMAL_ITEM,
+        'type' => MENU_CALLBACK,
     );
     $items['farewell'] = array(
     'title' => 'Farewell Friend!',
     'page callback' => 'say_farewell',
     'access callback' => TRUE,
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_CALLBACK,
     );
     return $items;
 }
 
 function say_hello() {
-  $greeting_array = array('hello', 'my', 'dear','friend');
-  $echo = '';
-    foreach ($greeting_array as $word) {
-      $echo .= $word.' ';
-    };
-    return '<p>'.$echo.'</p>';
+  $key = 'NwmyWmQSNHaLdDZwsj2lWg1z7Ntfacqdq32rWUJW';
+  $ch = curl_init("https://api.nasa.gov/planetary/earth/imagery?lon=100.75&lat=1.5&date=2014-02-01&cloud_score=True&api_key=NwmyWmQSNHaLdDZwsj2lWg1z7Ntfacqdq32rWUJW"); // such as http://example.com/example.xml
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_SSLVERSION, 0);
+  $data = curl_exec($ch);
+  if (FALSE === $data)
+       throw new Exception(curl_error($ch), curl_errno($ch));
+
+  curl_close($ch);
+  var_dump($data);
 }
 
 function say_farewell() {
     return '<img src="/sites/all/modules/pet/imgres.jpg">';
+}
+
+function greeting_user_login(){
+    $_GET['destination'] = 'hello_friend';
+}
+
+function greeting_user_logout(){
+    $_GET['destination'] = 'farewell';
 }
